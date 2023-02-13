@@ -15,7 +15,7 @@
 </br>
 
 ## :pencil: Descrição do Projeto
-O projeto **[Gráficos](https://nayarawatanuki.github.io/javascript__graphics/)**, é uma demonstração inicial do que pode ser realizado com o elemento `<canvas>` do HTML, manipulado por `javascript`. 
+O projeto **[Canvas - javascript](https://nayarawatanuki.github.io/javascript__graphics/)**, é uma demonstração inicial do que pode ser realizado com o elemento `<canvas>` do HTML, manipulado por `javascript`. 
 Esse projeto contém o objetivo de aprender a manipular elementos `HTML` com `javascript`. 
 </br>Desenvolvido para o curso de **JAVASCRIPT E HTML: PRATIQUE LÓGICA COM DESENHOS, ANIMAÇÕES E UM JOGO** da plataforma [Alura](https://www.alura.com.br/).
 
