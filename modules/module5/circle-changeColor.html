@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="../../style.css">
+
+        <title>Desenhe no quadro</title>
+    </head>
+
+    <body>
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand title title--highlight" href="../../index.html">Curso Javascript</a>
+
+                <!-- menu-hamburguer -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- menu inline -->
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav">
+                        <li>
+                            <a class="nav-item nav-link active" href="../module1/index.html">
+                                modulo 1 <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-item nav-link" href="../module2/index.html">modulo 2</a>
+                        </li>
+                        <li>
+                            <a class="nav-item nav-link" href="../module3/index.html">modulo 3</a>
+                        </li>
+                        <li>
+                            <a class="nav-item nav-link" href="../module4/index.html">modulo 4</a>
+                        </li>
+                        <li>
+                            <a class="nav-item nav-link" href="../module5/index.html">modulo 5</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="pt-5">
+            <section class="center pt-5">
+                <p class="color">Cor: <strong id="color"></strong></p>
+                <canvas width="600" height="400"></canvas>
+            </section>
+        </main>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
+
+<script>
+    var color = document.querySelector('#color');
+    var screen = document.querySelector('canvas');
+    var brush = screen.getContext('2d');
+    
+    brush.fillStyle = 'lightgray';
+    brush.fillRect(0, 0, 600, 400);
+
+    var draw = false;
+    var currentColor = 'blue';
+    var xRed = 0;
+    var xGreen  = 50;
+    var xBlue = 100;
+    var ySquare = 0;
+    var sizeSquare = 50;
+
+    color.textContent = 'azul';
+    color.style.color = currentColor;
+
+    
+    function square(x, y, size, color) {
+
+        brush.fillStyle = color;
+        brush.fillRect(x, y, size, size)
+        brush.fill();
+    }
+
+    function circle(x, y, radius, color) {
+
+        brush.fillStyle = color; // o padrão é blue
+        brush.beginPath();
+        brush.arc(x, y, radius, 0, 2 * Math.PI);
+        brush.fill();
+
+    }
+
+    function colorPalette() {
+
+        square(xRed, ySquare, sizeSquare, 'red');
+        square(xGreen, ySquare, sizeSquare, 'green');
+        square(xBlue, ySquare, sizeSquare, 'blue');
+
+    }
+
+    function moveMouse(event) {
+
+        var x = event.pageX - screen.offsetLeft;
+        var y = event.pageY - screen.offsetTop;
+
+        // usando a nova função 
+        if(draw && drawableSpace(x,y)) {
+
+            circle(x, y, 5, currentColor);
+        }
+    }
+
+    function drawActive() {
+
+        draw = true;
+    }
+
+    function drawDisable() {
+
+        draw = false;
+    }
+
+    function drawableSpace(x, y) {
+
+        if( (x >= 0) && 
+            (x < 3 * sizeSquare) && 
+            (y >= 0) && 
+            (y < sizeSquare) ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function changeColorText() {      
+
+        if(currentColor == 'blue'){
+            color.textContent = 'azul';
+        } else if(currentColor == 'red'){
+            color.textContent = 'vermelho';
+        } else {
+            color.textContent = 'verde';
+        }
+
+        color.style.color = currentColor;
+    }
+
+    function selColor(event) {
+
+        var x = event.pageX - screen.offsetLeft;
+        var y = event.pageY - screen.offsetTop;
+
+        // cada condição muda a variável `currentColor`
+
+        // começamos pela condição do y que é igual em todos os casos
+        if (y > ySquare && y < ySquare + sizeSquare) {
+
+            if (x > xRed && x < xRed + sizeSquare) {
+
+                currentColor = 'red';
+
+            } else if (x > xGreen && x < xGreen + sizeSquare) {
+
+                currentColor = 'green';
+
+            } else if (x > xBlue && x < xBlue + sizeSquare) {
+
+                currentColor = 'blue';
+            }
+        }
+
+        changeColorText();
+    }
+
+    colorPalette();
+
+    screen.onmousemove = moveMouse;
+    screen.onmousedown = drawActive;
+    screen.onmouseup = drawDisable;
+    screen.onclick = selColor;
+    
+</script>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="../../style.css">
+
+        <title>Gráfico de barras</title>
+    </head>
+
+    <body>
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand title title--highlight" href="../../index.html">Curso Javascript</a>
+
+                <!-- menu-hamburguer -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- menu inline -->
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav">
+                        <li>
+                            <a class="nav-item nav-link active" href="../module1/index.html">
+                                modulo 1 <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-item nav-link" href="../module2/index.html">modulo 2</a>
+                        </li>
+                        <li>
+                            <a class="nav-item nav-link" href="../module3/index.html">modulo 3</a>
+                        </li>
+                        <li>
+                            <a class="nav-item nav-link" href="../module4/index.html">modulo 4</a>
+                        </li>
+                        <li>
+                            <a class="nav-item nav-link" href="../module5/index.html">modulo 5</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="pt-5">
+            <section class="center pt-5">
+                <canvas width="600" height="400"></canvas>
+            </section>
+        </main>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
+
+<script>
+    
+    var screen = document.querySelector('canvas');
+    var brush = screen.getContext('2d');
+
+    var colors = ['blue','green','yellow', 'red'];
+    var serie2015 = [50, 25, 20, 5];
+    var serie2016 = [65, 20, 13, 2];
+    var description = ['Chrome', 'Firefox', 'Safari', 'Outros'];
+
+    function rectangle(x, y, width, height, color) {
+
+        brush.fillStyle = color;
+        brush.fillRect(x, y, width, height);
+        brush.strokeStyle = 'black';
+        brush.strokeRect(x, y, width, height);
+
+    }
+
+    function title(x, y, description) {
+        brush.font = 'bold 24px Georgia';
+        brush.fillStyle = 'black';
+        brush.fillText(description, x, y);
+    }
+
+    function subtitle(x, y, description) {
+        brush.font = 'bold 15px Georgia';
+        brush.fillStyle = 'black';
+        brush.fillText(description, x, y);
+    }
+
+    function text(x, y, description) {
+        brush.font = '15px Georgia';
+        brush.fillStyle = 'black';
+        brush.fillText(description, x, y);
+    }
+
+    
+    function bar(x, y, serie, colors, description) {
+        
+        title(x, y - 10, description);
+        
+        var sumHeight = 0;
+        for(var i = 0; i < serie.length; i++) {
+            var height = serie[i];
+            
+            rectangle(x, y + sumHeight, 50, height, colors[i]);
+            sumHeight = sumHeight + height;
+        }
+    }
+
+    function label(x, y, colors, description) {
+
+        subtitle(x, y - 15, 'Legenda:');
+
+        for (var position = 0; position < colors.length; position++) {
+
+            rectangle(x, y, 10, 10, colors[position]);
+
+            text(x + 15, y + 10, description[position]);
+
+            x = x + 80;
+
+        }
+    }
+
+    
+    bar(50, 50, serie2015, colors, '2015');
+    bar(150, 50, serie2016, colors, '2016');
+    
+    label(50, 200, colors, description);
+    
+</script>
